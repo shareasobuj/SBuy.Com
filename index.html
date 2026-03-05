@@ -3,73 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SBuy.com | Pro Edition</title>
+    <title>SBuy.com | Complete Store</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
-    <header>
-        <nav class="navbar">
-            <div class="nav-logo">SBuy<span>.com</span></div>
-            
-            <div class="nav-search">
-                <input placeholder="Search SBuy..." class="search-input">
-                <div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+    <nav class="navbar">
+        <div class="nav-logo" onclick="showPage('home-page')">SBuy<span>.com</span></div>
+        <div class="nav-search">
+            <input type="text" placeholder="Search SBuy.com">
+            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+        <div class="nav-links">
+            <div class="link-item" onclick="showPage('login-page')">
+                <span>Hello, Sign in</span>
+                <strong>Account</strong>
             </div>
-
-            <div class="nav-tools">
-                <div class="nav-item" onclick="openLogin()">
-                    <p>Hello, <span id="user-display">Sign in</span></p>
-                </div>
-                <div class="nav-cart" onclick="toggleCart()">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cart-count">0</span>
-                </div>
+            <div class="link-item" onclick="showPage('orders-page')">
+                <span>Returns</span>
+                <strong>& Orders</strong>
             </div>
-        </nav>
-    </header>
+            <div class="nav-cart" onclick="toggleCart()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
 
-    <section class="hero-section">
-        <div class="hero-msg">
-            <p>Welcome to SBuy! Huge discounts on Gaming Laptops & Gadgets.</p>
+    <div class="sub-nav">
+        <span onclick="showPage('home-page')">All</span>
+        <span onclick="showPage('products-page')">Today's Deals</span>
+        <span>Customer Service</span>
+        <span>Registry</span>
+        <span>Gift Cards</span>
+    </div>
+
+    <section id="home-page" class="page active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Upgrade Your Lifestyle</h1>
+                <p>Flat 50% off on all SBuy Originals.</p>
+                <button onclick="showPage('products-page')">Shop Now</button>
+            </div>
+        </div>
+        <div class="category-grid">
+            <div class="cat-card" onclick="showPage('products-page')"><h3>Electronics</h3><img src="https://m.media-amazon.com/images/I/71TPda7cwUL._AC_SL1500_.jpg"></div>
+            <div class="cat-card"><h3>Home Decor</h3><img src="https://m.media-amazon.com/images/I/61lwJy4B8PL._SX3000_.jpg"></div>
+            <div class="cat-card"><h3>Fashion</h3><img src="https://m.media-amazon.com/images/I/71Yv3L2S7vL._AC_SL1500_.jpg"></div>
         </div>
     </section>
 
-    <main class="shop-section" id="product-container"></main>
+    <section id="products-page" class="page">
+        <h2 class="page-title">Today's Deals & Products</h2>
+        <div class="product-grid" id="product-list">
+            </div>
+    </section>
 
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeLogin()">&times;</span>
-            <h2>Sign-In to SBuy</h2>
-            <input type="email" id="email" placeholder="Email or Phone">
-            <input type="password" id="password" placeholder="Password">
-            <button class="login-btn" onclick="handleLogin()">Continue</button>
-            <p style="font-size: 12px; margin-top: 10px;">By continuing, you agree to SBuy's Conditions of Use.</p>
+    <section id="orders-page" class="page">
+        <div class="container">
+            <h2>Your Orders</h2>
+            <div class="order-empty">
+                <i class="fa-solid fa-box-open"></i>
+                <p>You haven't placed any orders in the last 6 months.</p>
+                <button class="btn-yellow" onclick="showPage('products-page')">Continue Shopping</button>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section id="login-page" class="page">
+        <div class="login-container">
+            <form class="login-box">
+                <h2>Sign-In</h2>
+                <label>Email or mobile phone number</label>
+                <input type="text" required>
+                <label>Password</label>
+                <input type="password" required>
+                <button type="submit" class="btn-yellow">Continue</button>
+                <p>By continuing, you agree to SBuy's Conditions of Use and Privacy Notice.</p>
+            </form>
+        </div>
+    </section>
 
     <div id="cart-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h3>Your Cart</h3>
-            <button onclick="toggleCart()">X</button>
+            <h3>Shopping Cart</h3>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
         </div>
         <div id="cart-items"></div>
-        <div class="cart-footer">
-            <h4>Total: $<span id="total-price">0</span></h4>
-            <div id="payment-area" style="display:none;">
-                <h3>Payment Details</h3>
-                <input type="text" placeholder="Card Number">
-                <div style="display: flex; gap: 5px;">
-                    <input type="text" placeholder="MM/YY">
-                    <input type="text" placeholder="CVV">
-                </div>
-                <button class="pay-btn" onclick="processPayment()">Pay Now</button>
-            </div>
-            <button id="checkout-btn" class="checkout-btn" onclick="showPayment()">Proceed to Checkout</button>
+        <div class="cart-total">
+            <h3>Subtotal: $<span id="cart-total-price">0</span></h3>
+            <button class="btn-yellow">Proceed to Buy</button>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-</html>
+    </html>
